@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -e
+
+# Build Meilisearch binary in Docker
+docker build \
+    --tag meilisearch-centos7:${MEILISEARCH_VERSION} \
+    --build-arg MEILISEARCH_VERSION=${MEILISEARCH_VERSION} \
+    .
+
+# Copy Meilisearch binary from image
+mkdir build
+id=$(docker create meilisearch-centos7:${MEILISEARCH_VERSION})
+docker cp $id:/meilisearch-${MEILISEARCH_VERSION}/target/release/meilisearch ./build/meilisearch-${MEILISEARCH_VERSION}
+docker rm  $id
