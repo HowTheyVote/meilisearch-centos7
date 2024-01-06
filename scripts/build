@@ -4,6 +4,7 @@ set -e
 
 # Build Meilisearch binary in Docker
 docker build \
+    --platform linux/amd64 \
     --tag meilisearch-centos7:${MEILISEARCH_VERSION} \
     --build-arg MEILISEARCH_VERSION=${MEILISEARCH_VERSION} \
     .
